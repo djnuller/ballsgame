@@ -7,22 +7,25 @@ PShape player;
   En bold.
   Når bolden rammer en prik så popper prikken med en chance på 10% for at få en bonus.
 */
+int leftBorder = -10;
+int rightBorder = 690;
+int currentPlayerX = 0;
+
 void setup() {
+  frameRate(60);
   size(800, 800);
   // Creating the PShape as a square. The
   // numeric arguments are similar to rect().
   field = createSquares(25, 10);
-  player = player(0);
+  player = player(leftBorder);
     background(87, 150, 56);
 }
 
 void draw() {
   background(87, 150, 56);
-  translate(mouseX, 0);
   playerMovement();
+  translate(currentPlayerX, 0);
   shape(player, 25, 25);
-  
-  
 }
 
 PShape[][] createSquares(int rows, int cols) {
@@ -48,7 +51,14 @@ PShape player(int x) {
 }
 
 void playerMovement() {
-  player = player(mouseX);
+   if(keyPressed) {
+    if(keyCode == LEFT && currentPlayerX >= leftBorder) {
+      currentPlayerX -= 10;
+    }
+    if(keyCode == RIGHT && currentPlayerX != rightBorder) {
+      currentPlayerX += 10;
+    }
+  }
 }
 
 PShape createBall() {
